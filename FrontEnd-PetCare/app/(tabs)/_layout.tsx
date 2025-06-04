@@ -85,7 +85,7 @@ function Tabs() {
         },
         headerBackground: () => (
           <LinearGradient
-            colors={['#A67B5B', '#5C4033']}
+            colors={['#4A90E2', '#2C3E50']}
             style={styles.headerGradient}
             start={[0, 0]}
             end={[1, 0]}
@@ -140,11 +140,20 @@ export default function DrawerLayout() {
     <DrawerNavigator.Navigator
     screenOptions={({ navigation }) => ({
       drawerStyle: {
-        backgroundColor: '#d2b48c', // Marrom claro
+        backgroundColor: '#fff', // Marrom claro
         width: 240,
       },
       drawerActiveTintColor: Colors[colorScheme].tint,
       drawerInactiveTintColor: Colors[colorScheme].text,
+      headerTintColor: '#fff',
+    headerBackground: () => (
+      <LinearGradient
+        colors={['#4A90E2', '#2C3E50']}
+        style={styles.headerGradient}
+        start={[0, 0]}
+        end={[1, 0]}
+      />
+    ),
       headerLeft: () => (
         <Pressable
         onPress={() => {
@@ -176,7 +185,7 @@ export default function DrawerLayout() {
         headerTintColor: '#fff',
         headerBackground: () => (
           <LinearGradient
-            colors={['#A67B5B', '#5C4033']}
+            colors={['#4A90E2', '#2C3E50']}
             style={styles.headerGradient}
             start={[0, 0]}
             end={[1, 0]}
@@ -233,14 +242,14 @@ export default function DrawerLayout() {
           }}
           component={GerenciamentoServico}
         />
-        <DrawerNavigator.Screen
+        {/*<DrawerNavigator.Screen
           name="Relatorio"
           options={{
             title: 'Relatório',
             drawerIcon: ({ color }) => <Ionicons name="document" size={28} color={color} />,
           }}
           component={Relatorio}
-        />
+        />*/}
         <DrawerNavigator.Screen
           name="AlterarSenha"
           options={{

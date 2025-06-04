@@ -3,6 +3,7 @@ import { Provider as PaperProvider, DataTable, TextInput, Modal, Portal, IconBut
 import { SafeAreaView, StyleSheet, View, Image, ScrollView, Alert } from 'react-native';
 import axios from 'axios';
 import { black, white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const API_URL = 'http://10.0.2.2:3000';
 
@@ -18,7 +19,7 @@ const GerenciamentoServico = () => {
   const [newService, setNewService] = React.useState<{ tiposervico: string; valor: string }>({ tiposervico: '', valor: '' });
   const [visibleMenu, setVisibleMenu] = React.useState(false);
   const [campo1, setCampo1] = React.useState('');
-  const options = ['Tratamentos Faciais', 'Tratamentos Corporais', 'Tratamentos Capilares', 'Podologia', 'Bem-estar e Terapias Alternativas'];
+  const options = ['Banho', 'Tosa', 'Castração', 'Exames de Saúde', 'Vacinação', 'Limpeza Bucal'];
   const [searchQuery, setSearchQuery] = React.useState(''); // Estado para armazenar a pesquisa
 
 
@@ -123,10 +124,11 @@ const GerenciamentoServico = () => {
   };
 
   return (
+    <LinearGradient colors={['#0f0f0f', '#424242']} style={styles.gradientBackground}>
     <PaperProvider>
       <SafeAreaView style={styles.container}>
         <Image
-          source={require('../assets/images/Elysium.png')}
+          source={require('../assets/images/petcare.png')}
           style={styles.image}
         />
         <Button
@@ -134,7 +136,7 @@ const GerenciamentoServico = () => {
           mode="contained"
           onPress={() => showModal('addService')}
           textColor="white"
-          buttonColor="#A67B5B"
+          buttonColor="#00635D"
           contentStyle={{ flexDirection: 'row', alignItems: 'center' }}
           labelStyle={{ marginLeft: 12 }}
         >
@@ -171,8 +173,8 @@ const GerenciamentoServico = () => {
               {filteredServices.length > 0 ? ( // Use filteredServices para aplicar a lógica de pesquisa
                 filteredServices.map(service => (
                   <DataTable.Row key={service.id}>
-                    <DataTable.Cell style={styles.columnCell}><Text>{service.tiposervico}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.columnCell}><Text>{service.valor}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{service.tiposervico}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{service.valor}</Text></DataTable.Cell>
                     <DataTable.Cell style={styles.columnCell}>
                       <IconButton
                         icon="pencil"
@@ -197,7 +199,7 @@ const GerenciamentoServico = () => {
                 ))
               ) : (
                 <DataTable.Row>
-                  <DataTable.Cell><Text>Nenhum serviço encontrado</Text></DataTable.Cell>
+                  <DataTable.Cell><Text style={styles.columnHeaderText}>Nenhum serviço encontrado</Text></DataTable.Cell>
                 </DataTable.Row>
               )}
             </DataTable>
@@ -343,14 +345,18 @@ const GerenciamentoServico = () => {
 
       </SafeAreaView>
     </PaperProvider>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+    gradientBackground: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#D2B48C',
+    //backgroundColor: '#D2B48C',
   },
   image: {
     width: 100,
@@ -369,6 +375,7 @@ const styles = StyleSheet.create({
   },
   columnHeaderText: {
     fontWeight: 'bold',
+    color: 'white',
   },
   columnCell: {
     width: 200,
@@ -388,7 +395,7 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     width: '100%',
-    backgroundColor: '#D2B48C',
+    backgroundColor: '#444',
     paddingVertical: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
@@ -414,7 +421,7 @@ const styles = StyleSheet.create({
   modalFooter: {
     marginTop: 20,
     width: '100%',
-    backgroundColor: '#D2B48C',
+    backgroundColor: '#444',
     paddingVertical: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
@@ -458,9 +465,9 @@ const styles = StyleSheet.create({
     height: 20, // Defina a altura desejada
   },
   titleContainer: {
-    backgroundColor: '#C19A6B', // Cor de fundo do título
+    backgroundColor: '#00635D', // Cor de fundo do título
     borderWidth: 1, // Largura da borda
-    borderColor: '#A67B5B', // Cor da borda
+    borderColor: '#fff', // Cor da borda
     borderRadius: 5, // Bordas arredondadas
     padding: 10, // Espaçamento interno
     marginBottom: 10, // Espaçamento abaixo do título
@@ -479,7 +486,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   agendamentoButton: {
-    backgroundColor: '#A67B5B', // Cor marrom (ou o tom que preferir)
+    backgroundColor: '#00635D', // Cor marrom (ou o tom que preferir)
   },
   dataTable: {
     minWidth: 600,

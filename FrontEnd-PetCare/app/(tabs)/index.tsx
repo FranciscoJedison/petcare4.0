@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Animated, StyleSheet, View, Text, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';   
 
 export default function HomeScreen() {
   const [typingText, setTypingText] = useState('');
@@ -56,6 +56,9 @@ export default function HomeScreen() {
 
 
   return (
+    <LinearGradient
+      colors={['#0f0f0f', '#424242']}
+      style={styles.container}>
     <View style={styles.container}>
       {/* Imagem com animação de fade e zoom */}
       <Animated.View
@@ -81,6 +84,7 @@ export default function HomeScreen() {
         
       </Animated.View>
     </View>
+    </LinearGradient>
   );
 }
 
@@ -89,7 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center', //Alinhamento do conteúdo
     alignItems: 'center', //Alinhamento dos itens
-    backgroundColor: '#32312F', // Cor de fundo
+    //backgroundColor: '#32312F', // Cor de fundo
   },
   imageWrapper: {
     width: 200,

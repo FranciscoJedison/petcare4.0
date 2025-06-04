@@ -478,11 +478,11 @@ const GerenciamentoAgendamentoUser = () => {
 
   return (
 
-    <LinearGradient colors={['#f7e7ce', '#D2B48C', '#A67B5B']} style={styles.gradientBackground}>
+    <LinearGradient colors={['#0f0f0f', '#424242']} style={styles.gradientBackground}>
       <PaperProvider>
         <SafeAreaView style={styles.container}>
 
-          <Image source={require('../assets/images/Elysium.png')} style={styles.image} />
+          <Image source={require('../assets/images/petcare.png')} style={styles.image} />
 
           {/* Campo de pesquisa */}
           <Button
@@ -490,7 +490,7 @@ const GerenciamentoAgendamentoUser = () => {
             mode="contained"
             onPress={() => showModal('addAgendamento')}
             textColor="white"
-            buttonColor="#A67B5B"
+            buttonColor="#00635D"
             contentStyle={{ flexDirection: 'row', alignItems: 'center' }}
             labelStyle={{ marginLeft: 13 }}
           >
@@ -536,13 +536,13 @@ const GerenciamentoAgendamentoUser = () => {
                           : styles.zebraRowOdd
                       ]}
                     >
-                      <DataTable.Cell style={styles.columnCell}><Text>{agendamento.dataAtendimento}</Text></DataTable.Cell>
-                      <DataTable.Cell style={styles.columnCell}><Text>{agendamento.dthoraAgendamento}</Text></DataTable.Cell>
-                      <DataTable.Cell style={styles.columnCell}><Text>{agendamento.horario}</Text></DataTable.Cell>
-                      <DataTable.Cell style={styles.columnCell}><Text>{agendamento.tipoServico}</Text></DataTable.Cell>
-                      <DataTable.Cell style={styles.columnCell}><Text>{agendamento.usuarioNome}</Text></DataTable.Cell>
-                      <DataTable.Cell style={styles.columnCell}><Text>{agendamento.usuario_id}</Text></DataTable.Cell>
-                      <DataTable.Cell style={styles.columnCell}><Text>{agendamento.servico_id}</Text></DataTable.Cell>
+                      <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.dataAtendimento}</Text></DataTable.Cell>
+                      <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.dthoraAgendamento}</Text></DataTable.Cell>
+                      <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.horario}</Text></DataTable.Cell>
+                      <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.tipoServico}</Text></DataTable.Cell>
+                      <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.usuarioNome}</Text></DataTable.Cell>
+                      <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.usuario_id}</Text></DataTable.Cell>
+                      <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.servico_id}</Text></DataTable.Cell>
                       <DataTable.Cell style={styles.columnCell}>
                         <IconButton
                           icon="pencil"
@@ -567,7 +567,7 @@ const GerenciamentoAgendamentoUser = () => {
                   ))
                 ) : (
                   <DataTable.Row>
-                    <DataTable.Cell><Text>Nenhum agendamento encontrado</Text></DataTable.Cell>
+                    <DataTable.Cell><Text style={styles.columnHeaderText}>Nenhum agendamento encontrado</Text></DataTable.Cell>
                   </DataTable.Row>
                 )}
               </DataTable>
@@ -660,7 +660,7 @@ const GerenciamentoAgendamentoUser = () => {
                   mode="contained"
                   onPress={addAgendamento}
                   textColor="white"
-                  buttonColor="#A67B5B"
+                  buttonColor="#00635D"
                   contentStyle={{ flexDirection: 'row', alignItems: 'center' }}
                   labelStyle={{ marginLeft: 12 }}
                 >
@@ -774,7 +774,7 @@ const GerenciamentoAgendamentoUser = () => {
                   onPress={validateAndUpdateAgendamento}
                   style={styles.agendamentoButton}
                   textColor="white"
-                  buttonColor="#A67B5B"
+                  buttonColor="#00635D"
                 >
                   Salvar
                 </Button>
@@ -809,7 +809,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   tableHeader: {
-    backgroundColor: '#A67B5B', // Marrom mais escuro para o cabeçalho
+    backgroundColor: '#00635D', // Marrom mais escuro para o cabeçalho
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
   },
@@ -869,8 +869,8 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     resizeMode: 'cover',
     marginBottom: 20,
     borderRadius: 50,
@@ -893,7 +893,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   modalHeader: {
-    backgroundColor: '#D2B48C',
+    backgroundColor: '#444',
     alignItems: 'center',
     paddingVertical: 10,
     borderTopLeftRadius: 10,
@@ -909,7 +909,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   modalFooter: {
-    backgroundColor: '#D2B48C',
+    backgroundColor: '#444',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -981,9 +981,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   titleContainer: {
-    backgroundColor: '#C19A6B', // Cor de fundo do título
+    backgroundColor: '#00635D', // Cor de fundo do título
     borderWidth: 1, // Largura da borda
-    borderColor: '#A67B5B', // Cor da borda
+    borderColor: '#fff', // Cor da borda
     borderRadius: 5, // Bordas arredondadas
     padding: 8, // Espaçamento interno
     marginBottom: 10, // Espaçamento abaixo do título

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList, ListRenderItem, Linking } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const images = {
   b1: require('../../../assets/images/img1.png'),
@@ -80,7 +81,6 @@ const BlogScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      
       <FlatList
         data={blogPosts}
         renderItem={renderItem}
@@ -92,6 +92,7 @@ const BlogScreen: React.FC = () => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

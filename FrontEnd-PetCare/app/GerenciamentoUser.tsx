@@ -3,6 +3,7 @@ import { Provider as PaperProvider, DataTable, TextInput, Modal, Portal, IconBut
 import { SafeAreaView, StyleSheet, View, Image, ScrollView, Alert } from 'react-native'; // Importando o Image
 import axios from 'axios';
 import { Picker } from '@react-native-picker/picker'; // Importando o Picker
+import { LinearGradient } from 'expo-linear-gradient';
 
 const API_URL = 'http://10.0.2.2:3000'; // Use o IP da sua máquina
 
@@ -193,11 +194,12 @@ const GerenciamentoUser = () => {
   };
 
   return (
+    <LinearGradient colors={['#0f0f0f', '#424242']} style={styles.gradientBackground}>
     <PaperProvider>
       <SafeAreaView style={styles.container}>
         {/* Adicionando a imagem acima do botão */}
         <Image
-          source={require('../assets/images/Elysium.png')}
+          source={require('../assets/images/petcare.png')}
           style={styles.image}
         />
 
@@ -206,7 +208,7 @@ const GerenciamentoUser = () => {
           mode="contained"
           onPress={() => showModal('addUser')}
           textColor="white" // Cor branca para o texto
-          buttonColor="#A67B5B" // Cor para o fundo do botão
+          buttonColor="#00635D" // Cor para o fundo do botão
           contentStyle={{ flexDirection: 'row', alignItems: 'center' }} // Alinha ícone e texto horizontalmente
           labelStyle={{ marginLeft: 12 }} // Aumenta o espaçamento entre o ícone e o texto
         >
@@ -250,10 +252,10 @@ const GerenciamentoUser = () => {
               {filteredUsers.length > 0 ? (
                 filteredUsers.map(user => (
                   <DataTable.Row key={user.id}>
-                    <DataTable.Cell style={styles.columnCell}><Text>{user.nome}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.columnCell}><Text>{user.email}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.columnCell}><Text>{user.senha}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.columnCell}><Text>{user.tipoUsuario}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{user.nome}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{user.email}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{user.senha}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{user.tipoUsuario}</Text></DataTable.Cell>
                     <DataTable.Cell style={styles.columnCell}>
                       <IconButton
                         icon="pencil"
@@ -447,18 +449,22 @@ const GerenciamentoUser = () => {
 
       </SafeAreaView>
     </PaperProvider>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+    gradientBackground: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#D2B48C', // Cor marrom claro
+    //backgroundColor: '#D2B48C', // Cor marrom claro
   },
   image: {
-    width: 100, // Define a largura da imagem
-    height: 100, // Define a altura da imagem, igual à largura
+    width: 150, // Define a largura da imagem
+    height: 150, // Define a altura da imagem, igual à largura
     resizeMode: 'cover', // Ajusta a imagem para cobrir o container
     marginBottom: 20, // Espaçamento entre a imagem e o botão
     borderRadius: 50, // Aplica bordas arredondadas (50% de 100px)
@@ -484,7 +490,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   modalHeader: {
-    backgroundColor: '#D2B48C', // Marrom claro
+    backgroundColor: '#444', // Marrom claro
     alignItems: 'center',
     paddingVertical: 10,
     borderTopLeftRadius: 10,
@@ -515,7 +521,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   modalFooter: {
-    backgroundColor: '#D2B48C', // Marrom claro
+    backgroundColor: '#444', // Marrom claro
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -556,7 +562,7 @@ const styles = StyleSheet.create({
     padding: 8, // Espaçamento interno
   },
   agendamentoButton: {
-    backgroundColor: '#A67B5B', // Cor marrom (ou o tom que preferir)
+    backgroundColor: '#00635D', // Cor marrom (ou o tom que preferir)
   },
   searchInput: {
     marginVertical: 10, // Espaçamento vertical para o campo de pesquisa
@@ -580,9 +586,9 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   titleContainer: {
-    backgroundColor: '#C19A6B', // Cor de fundo do título
+    backgroundColor: '#00635D', // Cor de fundo do título
     borderWidth: 1, // Largura da borda
-    borderColor: '#A67B5B', // Cor da borda
+    borderColor: '#fff', // Cor da borda
     borderRadius: 5, // Bordas arredondadas
     padding: 8, // Espaçamento interno
     marginBottom: 10, // Espaçamento abaixo do título

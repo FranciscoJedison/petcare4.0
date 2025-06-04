@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Modal } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';  
 
 const AboutScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
+    <LinearGradient
+      colors={['#0f0f0f', '#424242']}>
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.imageContainer}>
         <Image 
@@ -73,13 +76,14 @@ const AboutScreen = () => {
         </View>
       </Modal>
     </ScrollView>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: '#32312F', // Cor de Fundo
+    //backgroundColor: '#32312F', // Cor de Fundo
     alignItems: 'center',
     minHeight: '100%', // Garantir que a tela ocupe toda a altura
   },

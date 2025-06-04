@@ -5,6 +5,7 @@ import axios from 'axios';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useEffect, useState } from 'react';
 import { Picker } from '@react-native-picker/picker';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const API_URL = 'http://10.0.2.2:3000'; // URL do backend
 const horarios = [
@@ -92,7 +93,7 @@ const GerenciamentoAgendamento = () => {
 
   useEffect(() => {
     const now = new Date();
-    const options = { timeZone: 'America/Sao_Paulo' };
+    const options = { timeZone: 'America/Sao_Paulo', hour12: false};
     const localDate = now.toLocaleString('sv-SE', options);
     const utcDate = new Date(localDate + 'Z');
     setNewAgendamento(prev => ({ ...prev, dthoraAgendamento: utcDate.toISOString() }));
@@ -390,16 +391,18 @@ const GerenciamentoAgendamento = () => {
   }, []);
 
   return (
+    <LinearGradient colors={['#0f0f0f', '#424242']} style={styles.gradientBackground}>
+
     <PaperProvider>
       <SafeAreaView style={styles.container}>
-        <Image source={require('../assets/images/Elysium.png')} style={styles.image} />
+        <Image source={require('../assets/images/petcare.png')} style={styles.image} />
         {/* Campo de pesquisa */}
         <Button
           icon="plus"
           mode="contained"
           onPress={() => showModal('addAgendamento')}
           textColor="white"
-          buttonColor="#A67B5B"
+          buttonColor="#00635D"
           contentStyle={{ flexDirection: 'row', alignItems: 'center' }}
           labelStyle={{ marginLeft: 13 }}
         >
@@ -421,7 +424,7 @@ const GerenciamentoAgendamento = () => {
         <ScrollView horizontal style={styles.scrollContainer}>
           <ScrollView style={styles.verticalScroll}>
             <DataTable style={styles.dataTable}>
-              <DataTable.Header>
+              <DataTable.Header style={styles.tableHeader}>
                 <DataTable.Title style={styles.columnHeader}><Text style={styles.columnHeaderText}>Data de Agendamento</Text></DataTable.Title>
                 <DataTable.Title style={styles.columnHeader}><Text style={styles.columnHeaderText}>Data de Atendimento</Text></DataTable.Title>
                 <DataTable.Title style={styles.columnHeader}><Text style={styles.columnHeaderText}>Horário</Text></DataTable.Title>
@@ -435,13 +438,13 @@ const GerenciamentoAgendamento = () => {
               {filteredAgendamentos.length > 0 ? ( // Use filteredAgendamentos para aplicar a lógica de pesquisa
                 filteredAgendamentos.map(agendamento => (
                   <DataTable.Row key={agendamento.id}>
-                    <DataTable.Cell style={styles.columnCell}><Text>{agendamento.dataAtendimento}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.columnCell}><Text>{agendamento.dthoraAgendamento}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.columnCell}><Text>{agendamento.horario}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.columnCell}><Text>{agendamento.tipoServico}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.columnCell}><Text>{agendamento.usuarioNome}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.columnCell}><Text>{agendamento.usuario_id}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.columnCell}><Text>{agendamento.servico_id}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.dataAtendimento}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.dthoraAgendamento}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.horario}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.tipoServico}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.usuarioNome}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.usuario_id}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.servico_id}</Text></DataTable.Cell>
                     <DataTable.Cell style={styles.columnCell}>
                       <IconButton icon="pencil" size={20} onPress={() => {
                         setCurrentAgendamento(agendamento);
@@ -456,7 +459,7 @@ const GerenciamentoAgendamento = () => {
                 ))
               ) : (
                 <DataTable.Row>
-                  <DataTable.Cell><Text>Nenhum agendamento encontrado</Text></DataTable.Cell>
+                  <DataTable.Cell><Text style={styles.columnHeaderText}>Nenhum agendamento encontrado</Text></DataTable.Cell>
                 </DataTable.Row>
               )}
             </DataTable>
@@ -574,7 +577,7 @@ const GerenciamentoAgendamento = () => {
                 mode="contained"
                 onPress={addAgendamento}
                 textColor="white"
-                buttonColor="#A67B5B"
+                buttonColor="#00635D"
                 contentStyle={{ flexDirection: 'row', alignItems: 'center' }}
                 labelStyle={{ marginLeft: 12 }}
               >
@@ -734,10 +737,14 @@ const GerenciamentoAgendamento = () => {
 
       </SafeAreaView>
     </PaperProvider>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+  gradientBackground: {
+    flex: 1,
+  },
   currentDataContainer: {
     marginBottom: 15,
     padding: 10,
@@ -747,12 +754,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#D2B48C',
+    //backgroundColor: '#D2B48C',
   },
   image: {
 
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     resizeMode: 'cover',
     marginBottom: 20,
     borderRadius: 50,
@@ -777,7 +784,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   modalHeader: {
-    backgroundColor: '#D2B48C',
+    backgroundColor: '#444',
     alignItems: 'center',
     paddingVertical: 10,
     borderTopLeftRadius: 10,
@@ -793,7 +800,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   modalFooter: {
-    backgroundColor: '#D2B48C',
+    backgroundColor: '#444',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -881,9 +888,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   titleContainer: {
-    backgroundColor: '#C19A6B', // Cor de fundo do título
+    backgroundColor: '#00635D', // Cor de fundo do título
     borderWidth: 1, // Largura da borda
-    borderColor: '#A67B5B', // Cor da borda
+    borderColor: '#fff', // Cor da borda
     borderRadius: 5, // Bordas arredondadas
     padding: 8, // Espaçamento interno
     marginBottom: 10, // Espaçamento abaixo do título
@@ -910,6 +917,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold', // Negrito
     textAlign: 'left', // Centraliza o texto
     color: 'white',
+  },
+    tableHeader: {
+    backgroundColor: '#00635D', // Marrom mais escuro para o cabeçalho
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
   },
 });
 
