@@ -809,15 +809,15 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   tableHeader: {
-    backgroundColor: '#00635D', // Marrom mais escuro para o cabeçalho
+    backgroundColor: '#00635D', // cor de fundo verde
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
   },
   zebraRowEven: {
-    backgroundColor: '#f9f1e7', // Marrom bem clarinho
+    backgroundColor: '#00635D', // Marrom bem clarinho
   },
   zebraRowOdd: {
-    backgroundColor: '#fffaf3', // Outra variação de tom claro
+    backgroundColor: '#00635D', // Outra variação de tom claro
   },
   dataTable: {
     minWidth: 600,

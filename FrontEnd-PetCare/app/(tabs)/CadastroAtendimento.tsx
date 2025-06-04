@@ -1,175 +1,403 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Alert, Image } from 'react-native';
-import { TextInput, Button, Text } from 'react-native-paper';
-import { useRouter } from 'expo-router';
-import axios from 'axios'; // Importando apenas o Axios
+import * as React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Provider as PaperProvider, Button, Text } from 'react-native-paper';
+import { SafeAreaView, StyleSheet, Image, View, Alert, TouchableOpacity } from 'react-native';
+import axios from 'axios';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { useEffect, useState } from 'react';
+import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { LinearGradient } from 'expo-linear-gradient';
 
-const API_URL = 'http://10.0.2.2:3000'; // Use o IP da sua máquina
+const API_URL = 'http://10.0.2.2:3000';
+const horarios = ['08:00:00', '09:00:00', '10:00:00', '11:00:00', '12:00:00'];
 
-export default function RegisterScreen() {
-  const [dataAtendimento, setDataAtendimento] = useState('');
-  const [dthoraAgendamento, setDthoraAgendamento] = useState('');
-  const [horario, setHorario] = useState('');
-  const [fkUsuarioId, setFkUsuarioId] = useState('');
-  const [fkServicoId, setFkServicoId] = useState('');
-  const router = useRouter();
+type RootStackParamList = {
+  Home: undefined;
+  GerenciamentoAgendamentoUser: undefined;
+};
 
-  const handleRegister = async () => {
+type Agendamento = {
+  id?: number;
+  dataAtendimento: string;
+  dthoraAgendamento: string;
+  horario: string;
+  usuario_id: number;
+  servico_id: number;
+  usuarioNome?: string;
+  tipoServico?: string;
+  usuarioEmail?: string;
+  valor?: number;
+  fk_usuario_id: number;
+  fk_servico_id: number;
+};
+
+type AgendamentoInsercao = {
+  dataAtendimento: string;
+  dthoraAgendamento: string;
+  horario: string;
+  fk_usuario_id: number;
+  fk_servico_id: number;
+};
+
+type Servico = {
+  id: number;
+  tiposervico: string;
+  valor: number;
+};
+
+type Usuario = {
+  id: number;
+  nome: string;
+  email: string;
+  tipoUsuario: number;
+};
+
+const CadastroAtendimento = () => {
+  
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const [currentAgendamento, setCurrentAgendamento] = React.useState<Agendamento | null>(null);
+  const [agendamentos, setAgendamentos] = React.useState<Agendamento[]>([]);
+  const [newAgendamento, setNewAgendamento] = React.useState<AgendamentoInsercao>({
+    dataAtendimento: '',
+    dthoraAgendamento: '',
+    horario: '',
+    fk_usuario_id: 0,
+    fk_servico_id: 0,
+  });
+  const [showDatePicker, setShowDatePicker] = React.useState(false);
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [servicos, setServicos] = useState<Servico[]>([]);
+  const [selectedServico, setSelectedServico] = useState('');
+  const [selectedUsuario, setSelectedUsuario] = useState('');
+  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
+  const [selectedHorario, setSelectedHorario] = useState('');
+  const [selectedDataAtendimento, setSelectedDataAtendimento] = useState('');
+
+  useEffect(() => {
+    const now = new Date();
+    const options = { timeZone: 'America/Sao_Paulo' };
+    const localDate = now.toLocaleString('sv-SE', options);
+    const utcDate = new Date(localDate + 'Z');
+    setNewAgendamento(prev => ({ ...prev, dthoraAgendamento: utcDate.toISOString() }));
+  }, []);
+
+  const fetchAgendamentos = async () => {
     try {
-      // Verificando se todos os campos foram preenchidos
-      if (!dataAtendimento || !dthoraAgendamento || !horario || !fkUsuarioId || !fkServicoId) {
-        Alert.alert('Erro', 'Todos os campos são obrigatórios.');
-        return;
-      }
-  
-      // Formatando as datas para o padrão ISO 8601
-      const formattedDataAtendimento = new Date(dataAtendimento).toISOString();
-      const formattedDthoraAgendamento = new Date(dthoraAgendamento + 'T' + horario).toISOString();
-  
-      // Estrutura do novo agendamento
-      const newAgendamento = {
-        dataatendimento: formattedDataAtendimento,
-        dthoraagendamento: formattedDthoraAgendamento,
-        horario,
-        fk_usuario_id: parseInt(fkUsuarioId),
-        fk_servico_id: parseInt(fkServicoId),
-      };
-  
-      // Enviando requisição POST para a API com axios
-      const response = await axios.post('http://10.0.2.2:3000/agendamento/inserir', newAgendamento, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const userEmailStored = await AsyncStorage.getItem('userEmail');
+      if (!userEmailStored) return;
+
+      const response = await axios.get(`${API_URL}/agendamentosUser`, {
+        params: { email: userEmailStored },
       });
-  
-      // Verificando a resposta do servidor
-      if (response.status === 201) {
-        Alert.alert('Sucesso', response.data.message);
-        router.push('/Login'); // Redireciona para a tela de login após cadastro
-      }
-  
-      // Limpeza do estado
-      setDataAtendimento('');
-      setDthoraAgendamento('');
-      setHorario('');
-      setFkUsuarioId('');
-      setFkServicoId('');
-  
-    } catch (error) {
-      // Tratamento de erro aprimorado
-      if (axios.isAxiosError(error)) {
-        // Caso seja erro do Axios
-        const errorMessage = error.response?.data?.message || `Erro: ${error.message}`;
-        Alert.alert('Erro', errorMessage);
-  
-        // Adicionando mais logs para diagnosticar o erro
-        console.error('Erro detalhado do Axios:', error.response?.data);
-        console.error('Erro status:', error.response?.status);
-        console.error('Erro headers:', error.response?.headers);
-      } else if (error instanceof Error) {
-        // Caso seja um erro genérico do JavaScript
-        console.error('Erro ao adicionar agendamento:', error.message);
-      } else {
-        console.error('Erro desconhecido:', error);
-        Alert.alert('Erro', 'Ocorreu um erro inesperado.');
-      }
+
+      const agendamentosData = response.data.map((item: any) => ({
+        id: item.agendamento_id,
+        dataAtendimento: item.dataatendimento,
+        dthoraAgendamento: item.dthoraagendamento,
+        horario: item.horario,
+        usuarioNome: item.usuario_nome,
+        usuario_id: item.usuario_id,
+        servico_id: item.servico_id,
+        tipoServico: item.tiposervico,
+        usuarioEmail: item.usuario_email,
+        valor: item.valor,
+      }));
+
+      setAgendamentos(agendamentosData);
+    } catch (error: any) {
+      console.error('Erro ao buscar agendamentos:', error.message || error);
     }
   };
 
-  return (
-    <View style={styles.container}>
-      {/* Cabeçalho com logo e nome */}
-      <View style={styles.header}>
-        <Image source={require('../../assets/images/petcare.png')} style={styles.image} />
-        <Text style={styles.brand}>Pet Care</Text>
-      </View>
+  const fetchServicos = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/servicos`);
+      setServicos(response.data);
+    } catch (error: any) {
+      console.error('Erro ao buscar serviços:', error.message || error);
+    }
+  };
 
-      <Text style={styles.title}>Adicionar Agendamento</Text>
-      <TextInput
-        label="Data Atendimento"
-        mode="outlined"
-        value={dataAtendimento}
-        onChangeText={setDataAtendimento}
-        style={styles.input}
-        placeholder="YYYY-MM-DD"
-      />
-      <TextInput
-        label="Data Agendamento"
-        mode="outlined"
-        value={dthoraAgendamento}
-        onChangeText={setDthoraAgendamento}
-        style={styles.input}
-        placeholder="YYYY-MM-DD"
-      />
-      <TextInput
-        label="Horário"
-        mode="outlined"
-        value={horario}
-        onChangeText={setHorario}
-        style={styles.input}
-        placeholder="HH:mm:ss"
-      />
-      <TextInput
-        label="ID Usuário"
-        mode="outlined"
-        value={fkUsuarioId}
-        onChangeText={setFkUsuarioId}
-        keyboardType="numeric"
-        style={styles.input}
-      />
-      <TextInput
-        label="ID Serviço"
-        mode="outlined"
-        value={fkServicoId}
-        onChangeText={setFkServicoId}
-        keyboardType="numeric"
-        style={styles.input}
-      />
-      <Button mode="contained" onPress={handleRegister} style={styles.button}>
-        Adicionar
-      </Button>
-    </View>
+  const fetchUsuarios = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/usuarios`);
+      setUsuarios(response.data);
+    } catch (error: any) {
+      console.error('Erro ao buscar usuários:', error.message || error);
+    }
+  };
+
+  const addAgendamento = async () => {
+    if (!newAgendamento.dataAtendimento || !newAgendamento.horario || newAgendamento.fk_servico_id <= 0) {
+      Alert.alert("Campos Obrigatórios", "Preencha todos os campos obrigatórios.", [{ text: "OK" }]);
+      return;
+    }
+
+    await fetchAgendamentos();
+    const [day1, month1, year1] = newAgendamento.dataAtendimento.split('/');
+    const formattedDataAtendimento1 = `${year1}-${month1}-${day1}`;
+
+    const horarioIndisponivel = agendamentos.some(agendamento =>
+      agendamento.dataAtendimento === formattedDataAtendimento1 &&
+      agendamento.horario === newAgendamento.horario
+    );
+
+    if (horarioIndisponivel) {
+      const horariosIndisponiveis = agendamentos
+        .filter(agendamento => agendamento.dataAtendimento === formattedDataAtendimento1)
+        .map(agendamento => agendamento.horario);
+
+      const horariosDisponiveis = horarios.filter(horario => !horariosIndisponiveis.includes(horario));
+
+      Alert.alert(
+        "Horário Indisponível",
+        horariosDisponiveis.length > 0
+          ? `Horários disponíveis para a data ${newAgendamento.dataAtendimento}: ${horariosDisponiveis.join(', ')}`
+          : `Não há horários disponíveis para a data ${newAgendamento.dataAtendimento}.`,
+        [{ text: "OK" }]
+      );
+      return;
+    }
+
+    const [day, month, year] = newAgendamento.dataAtendimento.split('/');
+    const formattedDataAtendimento = `${year}-${month}-${day}`;
+    const userId = await AsyncStorage.getItem('userId');
+    if (!userId) return;
+
+    const novoAgendamento: AgendamentoInsercao = {
+      dataAtendimento: formattedDataAtendimento,
+      dthoraAgendamento: new Date().toISOString(),
+      horario: newAgendamento.horario,
+      fk_usuario_id: Number(userId),
+      fk_servico_id: newAgendamento.fk_servico_id,
+    };
+
+    try {
+      await axios.post(`${API_URL}/agendamento/inserir`, novoAgendamento);
+      setNewAgendamento({ dataAtendimento: '', dthoraAgendamento: '', horario: '', fk_usuario_id: 0, fk_servico_id: 0 });
+      setSelectedServico('');
+      setSelectedUsuario('');
+      fetchAgendamentos();
+      Alert.alert("Sucesso", "Agendamento adicionado com sucesso!", [{ text: "OK" }]);
+    } catch (error) {
+      console.error('Erro ao adicionar agendamento:', error);
+    }
+  };
+
+  const onChangeDate = (event: any, date?: Date, isEditMode: boolean = false) => {
+    if (date) {
+      const formattedDate = date.toLocaleDateString('pt-BR');
+      if (isEditMode) {
+        setSelectedDataAtendimento(formattedDate);
+        setCurrentAgendamento(prev => prev ? { ...prev, dataAtendimento: formattedDate } : null);
+      } else {
+        setNewAgendamento(prev => ({ ...prev, dataAtendimento: formattedDate }));
+      }
+    }
+    setShowDatePicker(false);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchAgendamentos();
+      await fetchServicos();
+      await fetchUsuarios();
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <PaperProvider>
+      <LinearGradient colors={['#0f0f0f', '#424242']} style={styles.gradientBackground}>
+        <SafeAreaView style={styles.safeArea}>
+
+          <Image source={require('../../assets/images/petcare.png')} style={styles.image} />
+
+          <View style={styles.container}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>Adicionar Agendamento</Text>
+            </View>
+
+            <View style={styles.modalContent}>
+              <TouchableOpacity
+                onPress={() => setShowDatePicker(true)}
+                style={[
+                  styles.datePickerButton,
+                  newAgendamento.dataAtendimento ? { borderColor: '#00635D', borderWidth: 2 } : {}
+                ]}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.datePickerText}>
+                  {newAgendamento.dataAtendimento || 'Selecionar Data de Atendimento'}
+                </Text>
+              </TouchableOpacity>
+
+              {showDatePicker && (
+                <DateTimePicker
+                  value={selectedDate}
+                  mode="date"
+                  display="default"
+                  onChange={(event, date) => onChangeDate(event, date, false)}
+                />
+              )}
+
+
+              <View style={[
+                styles.pickerContainer,
+                newAgendamento.horario ? { borderColor: '#00635D', borderWidth: 2 } : {}
+              ]}>
+                <Picker
+                  selectedValue={newAgendamento.horario}
+                  onValueChange={(itemValue) =>
+                    setNewAgendamento(prev => ({ ...prev, horario: itemValue }))
+                  }
+                  style={styles.picker}
+                  dropdownIconColor="#00635D"
+                >
+                  <Picker.Item label="Selecione um horário" value="" />
+                  {horarios.map((horario, index) => (
+                    <Picker.Item key={index} label={horario} value={horario} />
+                  ))}
+                </Picker>
+              </View>
+
+              <View style={[
+                styles.pickerContainer,
+                selectedServico ? { borderColor: '#00635D', borderWidth: 2 } : {}
+              ]}>
+                <Picker
+                  selectedValue={selectedServico}
+                  onValueChange={(itemValue) => {
+                    setSelectedServico(itemValue);
+                    setNewAgendamento(prev => ({ ...prev, fk_servico_id: Number(itemValue) }));
+                  }}
+                  style={styles.picker}
+                  dropdownIconColor="#00635D"
+                >
+                  <Picker.Item label="Selecione um Serviço" value="" />
+                  {servicos.map(servico => (
+                    <Picker.Item key={servico.id} label={servico.tiposervico} value={servico.id} />
+                  ))}
+                </Picker>
+              </View>
+
+            </View>
+
+            <View style={styles.modalFooter}>
+              <Button
+                mode="contained"
+                onPress={addAgendamento}
+                textColor="white"
+                buttonColor="#00635D"
+                contentStyle={{ flexDirection: 'row', alignItems: 'center' }}
+                labelStyle={{ marginLeft: 12 }}
+              >
+                <Text>Adicionar Agendamento</Text>
+              </Button>
+            </View>
+
+            <Text style={styles.link} onPress={() => navigation.navigate('Home')}>Página Inicial</Text>
+            <Text style={styles.link} onPress={() => navigation.navigate('GerenciamentoAgendamentoUser')}>Gerenciamento de Agendamentos</Text>
+          </View>
+
+        </SafeAreaView>
+      </LinearGradient>
+    </PaperProvider>
   );
-}
+};
 
 const styles = StyleSheet.create({
+  gradientBackground: {
+    flex: 1,
+  },
+  safeArea: {
+    flex: 1,
+  },
   container: {
     flex: 1,
+    padding: 16,
+  },
+  modalHeader: {
+    alignItems: 'center',
+    paddingVertical: 10,
+    marginBottom: 10,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  modalContent: {
+    marginBottom: 20,
+  },
+  agendamentoInput: {
+    marginBottom: 10,
+  },
+  pickerContainer: {
+    height: 53,
+    borderWidth: 1.5,
+    borderColor: '#00635D',
+    borderRadius: 8,
+    backgroundColor: '#fff6f0',
+    justifyContent: 'center',
+    marginBottom: 16,
+    paddingHorizontal: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3, // Android
+  },
+
+  picker: {
+    height: '100%',
+    width: '100%',
+    color: '#5a3e2b', // cor do texto dentro do picker
+  },
+
+  modalFooter: {
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#32312F', // Marrom claro
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
+    paddingVertical: 10,
+    marginTop: 10,
   },
   image: {
     width: 150,
     height: 150,
-    borderRadius: 25,
-    marginRight: 10,
-  },
-  brand: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#EBFFF8',
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    resizeMode: 'cover',
     marginBottom: 20,
+    borderRadius: 50,
+    alignSelf: 'center',
+  },
+  link: {
+    marginTop: 15,
     textAlign: 'center',
-    color: '#fff',
+    color: '#00635D',
+    fontWeight: 'bold',
   },
-  input: {
-    width: '100%',
-    marginBottom: 15,
+  datePickerButton: {
+    height: 53,
+    borderWidth: 1.5,
+    borderColor: '#A67B5B',
+    borderRadius: 8,
+    backgroundColor: '#fff6f0',
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3, // para Android
   },
-  button: {
-    width: '100%',
-    marginTop: 10,
-    backgroundColor: '#00635D',
+  
+  datePickerText: {
+    color: '#5a3e2b',
+    fontSize: 16,
   },
 });
+
+export default CadastroAtendimento;
