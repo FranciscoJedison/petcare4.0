@@ -140,7 +140,7 @@ export default function DrawerLayout() {
     <DrawerNavigator.Navigator
     screenOptions={({ navigation }) => ({
       drawerStyle: {
-        backgroundColor: '#fff', // Marrom claro
+        backgroundColor: '#4c4c4c', // Marrom claro
         width: 240,
       },
       drawerActiveTintColor: Colors[colorScheme].tint,

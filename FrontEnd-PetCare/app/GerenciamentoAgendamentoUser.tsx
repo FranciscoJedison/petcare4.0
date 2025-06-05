@@ -814,7 +814,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 5,
   },
   zebraRowEven: {
-    backgroundColor: '#00635D', // Marrom bem clarinho
+    backgroundColor: '#0bb0a6', // Marrom bem clarinho
   },
   zebraRowOdd: {
     backgroundColor: '#00635D', // Outra variação de tom claro
