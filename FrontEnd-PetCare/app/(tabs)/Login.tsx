@@ -95,6 +95,7 @@ export default function LoginScreen() {
         style={styles.input}
         autoCapitalize="none"
         keyboardType="email-address"
+        autoFocus={true}
       />
 
       <TextInput
@@ -103,6 +104,7 @@ export default function LoginScreen() {
         onChangeText={setSenha}
         secureTextEntry
         style={styles.input}
+        autoFocus={true}
       />
 
       <Button
@@ -115,7 +117,7 @@ export default function LoginScreen() {
         Entrar
       </Button>
 
-      <Text style={styles.link} onPress={() => router.push('/(tabs)/CadastroAtendimento')}>
+      <Text style={styles.link} onPress={() => router.push('../../RegistroUser')}>
         Criar uma conta
       </Text>
 
