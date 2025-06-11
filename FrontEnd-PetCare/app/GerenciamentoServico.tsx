@@ -4,8 +4,8 @@ import { SafeAreaView, StyleSheet, View, Image, ScrollView, Alert } from 'react-
 import axios from 'axios';
 import { black, white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 import { LinearGradient } from 'expo-linear-gradient';
+import API_URL from '../conf/api';
 
-const API_URL = 'http://10.0.2.2:3000';
 
 const GerenciamentoServico = () => {
   const [visible, setVisible] = React.useState({

@@ -9,8 +9,8 @@ import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
+import API_URL from '../../conf/api';
 
-const API_URL = 'http://10.0.2.2:3000';
 const horarios = ['08:00:00', '09:00:00', '10:00:00', '11:00:00', '12:00:00'];
 
 type RootStackParamList = {

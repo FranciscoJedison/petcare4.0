@@ -9,12 +9,12 @@ import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
+import API_URL from '../conf/api';
 
 type RootStackParamList = {
   Home: undefined;
   GerenciamentoAgendamentoUser: undefined;
 };
-const API_URL = 'http://10.0.2.2:3000'; // URL do backend
 const horarios = [
   '08:00:00',
   '09:00:00',

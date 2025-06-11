@@ -5,8 +5,8 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useRouter } from 'expo-router';
+import API_URL from '../../conf/api';
 
-const API_URL = 'http://10.0.2.2:3000';
 
 // Tipagem correta para evitar erro do TypeScript
 type RootStackParamList = {

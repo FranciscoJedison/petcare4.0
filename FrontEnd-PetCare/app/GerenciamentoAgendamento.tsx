@@ -6,8 +6,8 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useEffect, useState } from 'react';
 import { Picker } from '@react-native-picker/picker';
 import { LinearGradient } from 'expo-linear-gradient';
+import API_URL from '../conf/api';
 
-const API_URL = 'http://10.0.2.2:3000'; // URL do backend
 const horarios = [
   '08:00:00',
   '09:00:00',

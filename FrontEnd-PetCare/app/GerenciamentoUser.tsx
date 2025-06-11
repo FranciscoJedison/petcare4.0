@@ -4,8 +4,8 @@ import { SafeAreaView, StyleSheet, View, Image, ScrollView, Alert } from 'react-
 import axios from 'axios';
 import { Picker } from '@react-native-picker/picker'; // Importando o Picker
 import { LinearGradient } from 'expo-linear-gradient';
+import API_URL from '../conf/api';
 
-const API_URL = 'http://10.0.2.2:3000'; // Use o IP da sua máquina
 
 const GerenciamentoUser = () => {
   const [visible, setVisible] = React.useState({

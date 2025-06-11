@@ -140,7 +140,7 @@ export default function DrawerLayout() {
     <DrawerNavigator.Navigator
     screenOptions={({ navigation }) => ({
       drawerStyle: {
-        backgroundColor: '#4c4c4c', // Marrom claro
+        backgroundColor: '#fff', // Marrom claro
         width: 240,
       },
       drawerActiveTintColor: Colors[colorScheme].tint,
@@ -172,7 +172,7 @@ export default function DrawerLayout() {
         }}
         style={{ marginLeft: 15 }}
       >
-        <Ionicons name="menu" size={28} color={Colors[colorScheme ?? 'light'].tint} />
+        <Ionicons name="menu" size={28} color={Colors[colorScheme ?? 'dark'].tint} />
         </Pressable>
       ),
     })}
@@ -340,7 +340,7 @@ export default function DrawerLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#fff',
   },
   headerGradient: {
     flex: 1,

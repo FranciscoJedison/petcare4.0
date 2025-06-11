@@ -1,131 +1,212 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons'; // Biblioteca de ícones
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Modal
+} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LinearGradient } from 'expo-linear-gradient';
 
-// Definindo o tipo do componente ServiceItem para aceitar apenas os ícones disponíveis na biblioteca FontAwesome do Expo
+// Importa suas telas filhas
+import Login from '../Login';
+import CadastroAtendimento from '../CadastroAtendimento';
+import GerenciamentoAgendamento from '../../GerenciamentoAgendamento';
+
 interface ServiceItemProps {
-  icon: React.ComponentProps<typeof FontAwesome>['name']; // Usando os ícones disponíveis na biblioteca FontAwesome
+  icon: React.ComponentProps<typeof FontAwesome>['name'];
   title: string;
   description: string;
 }
 
-const ServicesScreen = () => {
+type ViewKey = 'services' | 'login' | 'cadastro' | 'gerenciamento' | null;
+
+export default function ServicesScreen() {
+  const [modalView, setModalView] = useState<ViewKey>(null);
+
+  const handleAgendar = async () => {
+    const userType = await AsyncStorage.getItem('userType');
+
+    // Fecha o modal atual (caso esteja aberto)
+    setModalView(null);
+
+    // Aguarda 300ms para garantir que o modal anterior se feche
+    setTimeout(() => {
+      if (userType === '1') setModalView('cadastro');
+      else if (userType === '0') setModalView('gerenciamento');
+      else setModalView('login');
+    }, 300);
+  };
+
+  const renderModalContent = () => {
+    switch (modalView) {
+      case 'login':
+        return <Login />;
+      case 'cadastro':
+        return <CadastroAtendimento />;
+      case 'gerenciamento':
+        return <GerenciamentoAgendamento />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.heading}>
+    <>
+      <LinearGradient
+        colors={['#4c4c4c', '#fff', '#2c2c2c']}
+        style={styles.container}
+      >
+        <ScrollView contentContainerStyle={styles.serviceContainer}>
+          <View style={styles.serviceContainer}>
+            <ServiceItem
+              icon="search"
+              title="Tratamentos Faciais Avançados"
+              description="Nossos tratamentos faciais incluem limpeza de pele profunda, peelings químicos, microagulhamento, laser facial, radiofrequência e hidratação facial intensiva."
+            />
+            <ServiceItem
+              icon="heart"
+              title="Tratamentos Corporais"
+              description="Oferecemos massagens terapêuticas, lipocavitação, criolipólise, radiofrequência corporal, endermologia e envoltórios corporais para desintoxicação e hidratação."
+            />
+            <ServiceItem
+              icon="cut"
+              title="Tratamentos Capilares"
+              description="Nossos tratamentos capilares incluem mesoterapia, terapia com LED, PRP capilar, detox capilar, hidratação e nutrição profunda dos fios."
+            />
+            <ServiceItem
+              icon="stethoscope"
+              title="Podologia"
+              description="Oferecemos tratamento de calos e calosidades, cuidados com unhas encravadas, tratamento de micoses, reflexologia podal, hidratação e esfoliação dos pés e tratamento para pés diabéticos."
+            />
+            <ServiceItem
+              icon="leaf"
+              title="Bem-Estar e Terapias Alternativas"
+              description="Nossos serviços incluem aromaterapia, acupuntura estética, terapia com pedras quentes, reflexologia, reiki e meditação guiada."
+            />
+            <ServiceItem
+              icon="cut"
+              title="Tratamentos Corporais de Estética e Remodelação"
+              description="Oferecemos depilação a laser, tratamentos para estrias e cicatrizes, tratamentos para flacidez, bronzeamento artificial, clareamento de áreas específicas do corpo e terapias de esfoliação corporal e hidratação profunda."
+            />
+          </View>          
+        </ScrollView>
         
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Agendar</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.fixedButtonContainer}>
+            <TouchableOpacity style={styles.button} onPress={handleAgendar}>
+              <Text style={styles.buttonText}>Agendar</Text>
+            </TouchableOpacity>
+          </View>
+      </LinearGradient>
 
-      <View style={styles.serviceContainer}>
-        <ServiceItem
-          icon="pencil"
-          title="Consultas e Check-ups Veterinários"
-          description="Realizamos consultas preventivas e check-ups completos para garantir a saúde e bem-estar do seu pet. Diagnóstico preciso com profissionais qualificados."
-        />
-        <ServiceItem
-          icon="bath"
-          title="Banho e Tosa Especializados"
-          description="Oferecemos banho com produtos dermatologicamente testados, tosa higiênica, tosa na tesoura e hidratação para manter seu pet sempre limpo e saudável."
-        />
-        <ServiceItem
-          icon="eyedropper"
-          title="Vacinação do seu Pet"
-          description="Mantenha seu pet protegido com nosso calendário de vacinas essenciais e protocolo de vermifugação personalizado."
-        />
-        <ServiceItem
-          icon="cut"
-          title="Cuidados Estéticos e Bem-estar"
-          description="Corte de unhas, limpeza de ouvidos, escovação dos dentes e hidratação para pelos macios e saudáveis."
-        />
-        <ServiceItem
-          icon="user-md"
-          title="Odontologia Veterinária"
-          description="Cuidamos da saúde bucal do seu pet com limpeza de tártaro, extração dentária e orientações para uma higiene oral adequada, prevenindo doenças periodontais."
-        />
-        <ServiceItem
-          icon="hospital-o"
-          title="Cirurgias e Castração"
-          description="Realizamos procedimentos cirúrgicos com segurança e acompanhamento especializado, incluindo castração, remoção de tumores e outros tratamentos cirúrgicos essenciais."
-        />
-      </View>
-    </ScrollView>
+      <Modal
+        visible={modalView !== null}
+        animationType="slide"
+        onRequestClose={() => setModalView(null)}
+      >
+        <View style={{ flex: 1 }}>
+          {/* Botão de Voltar */}
+          <TouchableOpacity
+            style={{
+              padding: 12,
+              backgroundColor: '#8B4513',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+            onPress={() => setModalView(null)}
+          >
+            <FontAwesome name="arrow-left" size={20} color="white" />
+            <Text style={{ color: 'white', marginLeft: 10, fontSize: 16 }}>Voltar</Text>
+          </TouchableOpacity>
+
+          {/* Conteúdo do Modal */}
+          <View style={{ flex: 1 }}>{renderModalContent()}</View>
+        </View>
+      </Modal>
+
+    </>
   );
-};
+}
 
-// Componente para representar cada item de serviço
-const ServiceItem = ({ icon, title, description }: ServiceItemProps) => {
+// Componente ServiceItem separado, se precisar
+export function ServiceItem({ icon, title, description }: ServiceItemProps) {
   return (
-    <View style={styles.serviceItem}>
-      <FontAwesome name={icon} size={40} color="#0A6963" style={styles.icon} />
+    <LinearGradient
+      colors={['#00635D', '#1c1c1c']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={styles.serviceItem}
+    >
+      <FontAwesome name={icon} size={40} color="black" style={styles.icon} />
       <Text style={styles.serviceTitle}>{title}</Text>
       <Text style={styles.serviceDescription}>{description}</Text>
-    </View>
+    </LinearGradient>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#32312F', // Cor de fundo
+  },
+  serviceContainer: {
     padding: 20,
+    paddingBottom: 100,
   },
-  heading: {
+  fixedButtonContainer: {
+    position: 'absolute',
+    bottom: 60,
+    left: 20,
+    right: 20,
     alignItems: 'center',
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 10,
-    color: '#8B4513', // Cor marrom para o título
-  },
-  highlight: {
-    color: '#8B4513', // Cor marrom para destacar a palavra 'serviços'
   },
   button: {
-    backgroundColor: '#0A6963', // Cor do botão marrom
-    paddingVertical: 10,
-    paddingHorizontal: 30,
+    backgroundColor: '#00635D',
+    paddingVertical: 12,
+    paddingHorizontal: 40,
     borderRadius: 8,
-    marginTop: 10,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 2, height: 2 },
+    shadowRadius: 4,
   },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
   },
-  serviceContainer: {
-    marginTop: 20,
-  },
   serviceItem: {
-    backgroundColor: 'white',
-    padding: 15,
-    marginBottom: 20,
-    borderRadius: 10,
+    padding: 20,
+    marginBottom: 15,
+    borderRadius: 15,
+    alignItems: 'center',
+    marginHorizontal: 10,
+    maxWidth: 320,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowOffset: { width: 2, height: 2 },
-    elevation: 3,
-    alignItems: 'center',
+    elevation: 5,
   },
   icon: {
-    marginBottom: 10,
+    marginBottom: 15,
+    backgroundColor: '#f0e6d6',
+    padding: 10,
+    borderRadius: 50,
   },
   serviceTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
-    color: '#0A6963', // Cor marrom para os títulos dos serviços
+    color: 'white',
     marginBottom: 10,
-  },
-  serviceDescription: {
-    fontSize: 16,
-    color: '#333',
     textAlign: 'center',
   },
+  serviceDescription: {
+    fontSize: 15,
+    color: 'white',
+    textAlign: 'center',
+    lineHeight: 22,
+  },
 });
-
-export default ServicesScreen;
