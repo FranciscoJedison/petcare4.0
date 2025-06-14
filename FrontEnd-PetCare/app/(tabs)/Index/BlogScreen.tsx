@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#32312F', // Marrom claro
     alignItems: 'center',
     paddingVertical: 20,
+    paddingBottom: 80,
   },
   heading: {
     fontSize: 28,

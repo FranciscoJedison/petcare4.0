@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     //backgroundColor: '#32312F', // Cor de Fundo
     alignItems: 'center',
     minHeight: '100%', // Garantir que a tela ocupe toda a altura
+    paddingBottom: 80,
   },
   imageContainer: {
     alignItems: 'center',

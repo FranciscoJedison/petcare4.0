@@ -31,7 +31,7 @@ const DrawerNavigator = createDrawerNavigator();
 const TabNavigator = createBottomTabNavigator();
 
 type IconName =
-  | 'home'
+  | 'home-sharp'
   | 'information'
   | 'construct'
   | 'briefcase'
@@ -51,7 +51,7 @@ function Tabs() {
 
           switch (route.name) {
             case 'Home':
-              iconName = 'home';
+              iconName = 'home-sharp';
               break;
             case 'Sobre nos':
               iconName = 'information';
@@ -72,7 +72,7 @@ function Tabs() {
               iconName = 'call';
               break;
             default:
-              iconName = 'home';
+              iconName = 'home-sharp';
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -91,6 +91,30 @@ function Tabs() {
             end={[1, 0]}
           />
         ),
+        tabBarStyle: {
+        position: 'absolute',
+        backgroundColor: 'rgba(10, 10, 10, 0.55)',
+        borderRadius: 20,
+        marginHorizontal: 20,
+        marginBottom: 5,
+        height: 60,
+        borderTopWidth: 0,
+        borderTopColor: 'transparent',
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.1)',
+        backdropFilter: 'blur(10px)',
+        borderBottomWidth: 0,
+        borderBottomColor: 'transparent',
+        paddingBottom: 10,
+        elevation: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.3,
+        shadowRadius: 5,
+      },
+          sceneContainerStyle: {
+            backgroundColor: '#121212',
+          },
       })}
     >
       <TabNavigator.Screen name="Home" component={HomeScreen} options={{ title: 'Página Inicial' }} />
@@ -98,9 +122,9 @@ function Tabs() {
       <TabNavigator.Screen name="Nossos serviços" component={ServiceScreen} options={{ title: 'Nossos Serviços' }} />
       <TabNavigator.Screen name="Portfolio" component={PortfolioScreen} options={{ title: 'Portfólio' }} />
       <TabNavigator.Screen name="Depoimentos" component={TestimonialScreen} options={{ title: 'Depoimentos' }} />
-      <TabNavigator.Screen name="Noticias sobre nossos serviços" component={BlogScreen} options={{ title: 'Notícias' }} />
       <TabNavigator.Screen name="Contate -me" component={ContactScreen} options={{ title: 'Contato' }} />
     </TabNavigator.Navigator>
+    //<TabNavigator.Screen name="Noticias sobre nossos serviços" component={BlogScreen} options={{ title: 'Notícias' }} />
   );
 }
 
@@ -139,10 +163,17 @@ export default function DrawerLayout() {
   return (
     <DrawerNavigator.Navigator
     screenOptions={({ navigation }) => ({
-      drawerStyle: {
-        backgroundColor: '#fff', // Marrom claro
-        width: 240,
-      },
+    drawerStyle: {
+      backgroundColor: 'rgba(255, 255, 255, 0.80)', // branco com 85% de opacidade
+      width: 240,
+      borderRadius: 20, // bordas arredondadas
+      marginVertical: 50, // espaço em cima e embaixo
+      elevation: 10, // sombra no Android
+      shadowColor: '#000', // sombra no iOS
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.3,
+      shadowRadius: 5,
+    },
       drawerActiveTintColor: Colors[colorScheme].tint,
       drawerInactiveTintColor: Colors[colorScheme].text,
       headerTintColor: '#fff',
@@ -340,7 +371,7 @@ export default function DrawerLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#fff',
   },
   headerGradient: {
     flex: 1,

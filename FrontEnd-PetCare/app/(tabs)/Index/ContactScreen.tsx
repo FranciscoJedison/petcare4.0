@@ -47,6 +47,11 @@ const ContactScreen = () => {
             <TouchableOpacity style={{ backgroundColor: "#0A6963", padding: 15, borderRadius: 5, alignItems: "center" }}>
                 <Text style={{ color: "#fff", fontSize: 16, fontWeight: "bold" }}>Enviar mensagem</Text>
             </TouchableOpacity>
+            <View style={{ marginBottom: 20,  paddingBottom: 30 }}>
+                <Text style={{ fontSize: 18, fontWeight: "bold", color:"white" }}></Text>
+                <Text style={{ fontSize: 16, color: "white", marginTop: 5 }}>
+            </Text>
+            </View>
         </ScrollView>
     );
 };

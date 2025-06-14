@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#32312F', // Cor marrom claro no fundo
     paddingVertical: 20,
     paddingHorizontal: 10,
+    paddingBottom: 80,
   },
   heading: {
     alignItems: 'center',
