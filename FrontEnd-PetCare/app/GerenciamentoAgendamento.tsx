@@ -452,8 +452,14 @@ const GerenciamentoAgendamento = () => {
               </DataTable.Header>
 
               {filteredAgendamentos.length > 0 ? ( // Use filteredAgendamentos para aplicar a lógica de pesquisa
-                filteredAgendamentos.map(agendamento => (
-                  <DataTable.Row key={agendamento.id}>
+                filteredAgendamentos.map((agendamento, index) =>  (
+                  <DataTable.Row key={agendamento.id}
+                    style={[
+                        index % 2 === 0
+                          ? styles.zebraRowEven
+                          : styles.zebraRowOdd
+                      ]}
+                  >
                     <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.dataAtendimento}</Text></DataTable.Cell>
                     <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{formatDate(agendamento.dthoraAgendamento)}</Text></DataTable.Cell>
                     <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.horario}</Text></DataTable.Cell>
@@ -760,6 +766,13 @@ const GerenciamentoAgendamento = () => {
 const styles = StyleSheet.create({
   gradientBackground: {
     flex: 1,
+  },
+
+    zebraRowEven: {
+    backgroundColor: '#0bb0a6',
+  },
+  zebraRowOdd: {
+    backgroundColor: '#00635D',
   },
   currentDataContainer: {
     marginBottom: 15,

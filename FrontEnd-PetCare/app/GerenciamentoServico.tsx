@@ -158,7 +158,7 @@ const GerenciamentoServico = () => {
         <ScrollView horizontal style={styles.scrollContainer}>
           <ScrollView style={styles.verticalScroll}>
             <DataTable style={styles.dataTable}>
-              <DataTable.Header>
+              <DataTable.Header style={styles.tableHeader}>
                 <DataTable.Title style={styles.columnHeader}>
                   <Text style={styles.columnHeaderText}>Tipo de Serviço</Text>
                 </DataTable.Title>
@@ -171,8 +171,14 @@ const GerenciamentoServico = () => {
               </DataTable.Header>
 
               {filteredServices.length > 0 ? ( // Use filteredServices para aplicar a lógica de pesquisa
-                filteredServices.map(service => (
-                  <DataTable.Row key={service.id}>
+                filteredServices.map((service, index) => (
+                  <DataTable.Row key={service.id}
+                  style={[
+                        index % 2 === 0
+                          ? styles.zebraRowEven
+                          : styles.zebraRowOdd
+                      ]}
+                  >
                     <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{service.tiposervico}</Text></DataTable.Cell>
                     <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{service.valor}</Text></DataTable.Cell>
                     <DataTable.Cell style={styles.columnCell}>
@@ -376,6 +382,17 @@ const styles = StyleSheet.create({
   columnHeaderText: {
     fontWeight: 'bold',
     color: 'white',
+  },
+    zebraRowEven: {
+    backgroundColor: '#0bb0a6',
+  },
+  zebraRowOdd: {
+    backgroundColor: '#00635D',
+  },
+    tableHeader: {
+    backgroundColor: '#00635D', // cor de fundo verde
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
   },
   columnCell: {
     width: 200,
