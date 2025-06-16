@@ -106,7 +106,7 @@ const GerenciamentoAgendamentoUser = () => {
   const [loading, setLoading] = useState(true); // Estado para controle de carregamento
 
   useEffect(() => {
-    navigation.setOptions({ title: 'Gerenciamento de Agendamentos' });
+    navigation.setOptions({ title: 'Lista de Agendamentos' });
   }, []);
   useEffect(() => {
     const now = new Date();
@@ -484,7 +484,7 @@ const GerenciamentoAgendamentoUser = () => {
 
           <Image source={require('../assets/images/petcare.png')} style={styles.image} />
 
-          {/* Campo de pesquisa */}
+          {/* Campo de pesquisa
           <Button
             icon="plus"
             mode="contained"
@@ -495,7 +495,7 @@ const GerenciamentoAgendamentoUser = () => {
             labelStyle={{ marginLeft: 13 }}
           >
             Adicionar Agendamento
-          </Button>
+          </Button>*/}
 
           <TextInput
             label="Pesquisar"
@@ -516,12 +516,12 @@ const GerenciamentoAgendamentoUser = () => {
                 {/* Cabeçalho */}
                 <DataTable.Header style={styles.tableHeader}>
                   <DataTable.Title style={styles.columnHeader}><Text style={styles.columnHeaderText}>Data de Agendamento</Text></DataTable.Title>
-                  <DataTable.Title style={styles.columnHeader}><Text style={styles.columnHeaderText}>Data de Atendimento</Text></DataTable.Title>
+                  {/*<DataTable.Title style={styles.columnHeader}><Text style={styles.columnHeaderText}>Data de Atendimento</Text></DataTable.Title>*/}
                   <DataTable.Title style={styles.columnHeader}><Text style={styles.columnHeaderText}>Horário</Text></DataTable.Title>
                   <DataTable.Title style={styles.columnHeader}><Text style={styles.columnHeaderText}>Serviço</Text></DataTable.Title>
-                  <DataTable.Title style={styles.columnHeader}><Text style={styles.columnHeaderText}>Usuário</Text></DataTable.Title>
+                  {/*<DataTable.Title style={styles.columnHeader}><Text style={styles.columnHeaderText}>Usuário</Text></DataTable.Title>
                   <DataTable.Title style={styles.columnHeader}><Text style={styles.columnHeaderText}>ID do Usuário</Text></DataTable.Title>
-                  <DataTable.Title style={styles.columnHeader}><Text style={styles.columnHeaderText}>ID do Serviço</Text></DataTable.Title>
+                  <DataTable.Title style={styles.columnHeader}><Text style={styles.columnHeaderText}>ID do Serviço</Text></DataTable.Title>*/}
                   <DataTable.Title style={styles.columnHeader}><Text style={styles.columnHeaderText}>Ações</Text></DataTable.Title>
                 </DataTable.Header>
 
@@ -537,12 +537,12 @@ const GerenciamentoAgendamentoUser = () => {
                       ]}
                     >
                       <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.dataAtendimento}</Text></DataTable.Cell>
-                      <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.dthoraAgendamento}</Text></DataTable.Cell>
+                      {/*<DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.dthoraAgendamento}</Text></DataTable.Cell>*/}
                       <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.horario}</Text></DataTable.Cell>
                       <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.tipoServico}</Text></DataTable.Cell>
-                      <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.usuarioNome}</Text></DataTable.Cell>
+                      {/*<DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.usuarioNome}</Text></DataTable.Cell>
                       <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.usuario_id}</Text></DataTable.Cell>
-                      <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.servico_id}</Text></DataTable.Cell>
+                      <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.servico_id}</Text></DataTable.Cell>*/}
                       <DataTable.Cell style={styles.columnCell}>
                         <IconButton
                           icon="pencil"
@@ -829,12 +829,16 @@ const styles = StyleSheet.create({
     width: 200,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRightWidth: 1,
+    borderRightColor: '#ccc',
   },
   columnCell: {
     width: 200,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 10,
+    borderRightColor: '#ccc',
+    borderRightWidth: 1,
   },
   columnHeaderText: {
     color: 'white',

@@ -57,7 +57,7 @@ export default function ServicesScreen() {
   return (
     <>
       <LinearGradient
-        colors={['#4c4c4c', '#fff', '#2c2c2c']}
+        colors={['#0f0f0f', '#424242']}
         style={styles.container}
       >
         <ScrollView contentContainerStyle={styles.serviceContainer}>

@@ -93,7 +93,7 @@ function Tabs() {
         ),
         tabBarStyle: {
         position: 'absolute',
-        backgroundColor: 'rgba(10, 10, 10, 0.55)',
+        backgroundColor: 'rgba(10, 10, 10, 0.75)',
         borderRadius: 20,
         marginHorizontal: 20,
         marginBottom: 5,
@@ -164,18 +164,18 @@ export default function DrawerLayout() {
     <DrawerNavigator.Navigator
     screenOptions={({ navigation }) => ({
     drawerStyle: {
-      backgroundColor: 'rgba(255, 255, 255, 0.80)', // branco com 85% de opacidade
-      width: 240,
-      borderRadius: 20, // bordas arredondadas
-      marginVertical: 50, // espaço em cima e embaixo
-      elevation: 10, // sombra no Android
-      shadowColor: '#000', // sombra no iOS
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.3,
-      shadowRadius: 5,
+    backgroundColor: 'rgba(10, 10, 10, 0.75)', // preto com 60% de opacidade
+    width: 240,
+    borderRadius: 20,
+    marginVertical: 50,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
     },
-      drawerActiveTintColor: Colors[colorScheme].tint,
-      drawerInactiveTintColor: Colors[colorScheme].text,
+      drawerActiveTintColor: '#4A90E2',
+      drawerInactiveTintColor: '#fff',
       headerTintColor: '#fff',
     headerBackground: () => (
       <LinearGradient

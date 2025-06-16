@@ -91,6 +91,20 @@ const GerenciamentoAgendamento = () => {
     );
   });
 
+  const formatDate = (isoDate: string | null | undefined): string => {
+  if (!isoDate) return '';  // proteção caso o campo esteja vazio
+  const date = new Date(isoDate);
+  return new Intl.DateTimeFormat('pt-BR', {
+    timeZone: 'America/Sao_Paulo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  }).format(date);
+};
+
   useEffect(() => {
     const now = new Date();
     const options = { timeZone: 'America/Sao_Paulo', hour12: false};
@@ -384,6 +398,7 @@ const GerenciamentoAgendamento = () => {
     setShowDatePicker(false); // Fecha o DateTimePicker
   };
 
+
   useEffect(() => {
     fetchAgendamentos();
     fetchServicos();
@@ -396,7 +411,7 @@ const GerenciamentoAgendamento = () => {
     <PaperProvider>
       <SafeAreaView style={styles.container}>
         <Image source={require('../assets/images/petcare.png')} style={styles.image} />
-        {/* Campo de pesquisa */}
+        {/* Campo de pesquisa  */}
         <Button
           icon="plus"
           mode="contained"
@@ -408,6 +423,7 @@ const GerenciamentoAgendamento = () => {
         >
           Adicionar Agendamento
         </Button>
+        *
         <TextInput
           label="Pesquisar"
           mode="outlined"
@@ -439,7 +455,7 @@ const GerenciamentoAgendamento = () => {
                 filteredAgendamentos.map(agendamento => (
                   <DataTable.Row key={agendamento.id}>
                     <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.dataAtendimento}</Text></DataTable.Cell>
-                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.dthoraAgendamento}</Text></DataTable.Cell>
+                    <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{formatDate(agendamento.dthoraAgendamento)}</Text></DataTable.Cell>
                     <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.horario}</Text></DataTable.Cell>
                     <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.tipoServico}</Text></DataTable.Cell>
                     <DataTable.Cell style={styles.columnCell}><Text style={styles.columnHeaderText}>{agendamento.usuarioNome}</Text></DataTable.Cell>
