@@ -784,7 +784,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     //backgroundColor: '#D2B48C',
-    paddingTop: 100,
   },
   image: {
 

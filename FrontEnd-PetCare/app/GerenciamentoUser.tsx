@@ -473,7 +473,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     //backgroundColor: '#D2B48C', // Cor marrom claro
-    paddingTop: 100,
   },
   image: {
     width: 150, // Define a largura da imagem

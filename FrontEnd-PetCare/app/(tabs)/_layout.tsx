@@ -85,7 +85,7 @@ function Tabs() {
         },
         headerBackground: () => (
         <LinearGradient
-          colors={['#111111', '#111111']}
+          colors={['#222222', '#222222']}
           style={styles.headerGradient}
           start={[0, 0]}
           end={[1, 0]}
@@ -179,7 +179,7 @@ export default function DrawerLayout() {
       headerTintColor: '#fff',
     headerBackground: () => (
       <LinearGradient
-        colors={['#111111', '#111111']}
+        colors={['#222222', '#222222']}
         style={styles.headerGradient}
         start={[0, 0]}
         end={[1, 0]}
@@ -216,7 +216,7 @@ export default function DrawerLayout() {
         headerTintColor: '#fff',
         headerBackground: () => (
           <LinearGradient
-            colors={['#111111', '#111111']}
+            colors={['#222222', '#222222']}
             style={styles.headerGradient}
             start={[0, 0]}
             end={[1, 0]}
@@ -376,4 +376,7 @@ const styles = StyleSheet.create({
   headerGradient: {
     flex: 1,
   },
+  headerBorder: {
+    flex: 1,
+  }
 });
