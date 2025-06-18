@@ -487,8 +487,8 @@ const styles = StyleSheet.create({
   },
     tableHeader: {
     backgroundColor: '#00635D', // cor de fundo verde
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   // ... outros estilos
   verticalScroll: {
@@ -561,6 +561,7 @@ const styles = StyleSheet.create({
     borderRightColor: '#ccc',
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 5,
   },
   columnCell: {
     width: 200, // Deve ser o mesmo valor do cabeçalho
@@ -568,6 +569,7 @@ const styles = StyleSheet.create({
     borderRightColor: '#ccc',
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 5,
   },
   columnHeaderText: {
     color: 'white', // Cor do texto do cabeçalho
@@ -583,9 +585,9 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     marginVertical: 10, // Espaçamento vertical para o campo de pesquisa
-    borderWidth: 1, // Largura da borda
-    borderColor: '#ccc', // Cor da borda padrão
-    borderRadius: 50, // Bordas arredondadas
+    //borderWidth: 1, // Largura da borda
+    //borderColor: '#ccc', // Cor da borda padrão
+    borderRadius: 2, // Bordas arredondadas
     padding: 10, // Espaçamento interno
     backgroundColor: '#fff', // Cor de fundo
     elevation: 2, // Sombra para dar um efeito de elevação

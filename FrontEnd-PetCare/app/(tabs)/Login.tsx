@@ -78,57 +78,61 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.imageWrapper}>
-          <Image source={require('../../assets/images/petcare.png')} style={styles.image} />
-        </View>
-        <Text style={styles.brand}>Pet Care</Text>
-      </View>
-
-      <Text style={styles.title}>Login</Text>
-
-      <TextInput
-        label="E-mail"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-        autoCapitalize="none"
-        keyboardType="email-address"
-        autoFocus={true}
-      />
-
-      <TextInput
-        label="Senha"
-        value={senha}
-        onChangeText={setSenha}
-        secureTextEntry
-        style={styles.input}
-        autoFocus={true}
-      />
-
-      <Button
-        mode="contained"
-        onPress={handleLogin}
-        style={styles.button}
-        loading={loading}
-        disabled={loading}
-      >
-        Entrar
-      </Button>
-
-      <Text style={styles.link} onPress={() => router.push('../../RegistroUser')}>
-        Criar uma conta
-      </Text>
-
-      <Snackbar
-        visible={visibleSnackbar}
-        onDismiss={() => setVisibleSnackbar(false)}
-        duration={Snackbar.DURATION_SHORT}
-      >
-        Login bem-sucedido!
-      </Snackbar>
+  <View style={styles.container}>
+    <View style={styles.transparentBox}>
+  <View style={styles.header}>
+    <View style={styles.imageWrapper}>
+      <Image source={require('../../assets/images/petcare.png')} style={styles.image} />
     </View>
+    <Text style={styles.brand}>Pet Care</Text>
+  </View>
+
+  
+    <Text style={styles.title}>Login</Text>
+
+    <TextInput
+      label="E-mail"
+      value={email}
+      onChangeText={setEmail}
+      style={styles.input}
+      autoCapitalize="none"
+      keyboardType="email-address"
+      autoFocus={true}
+    />
+
+    <TextInput
+      label="Senha"
+      value={senha}
+      onChangeText={setSenha}
+      secureTextEntry
+      style={styles.input}
+      autoFocus={true}
+    />
+
+    <Button
+      mode="contained"
+      onPress={handleLogin}
+      style={styles.button}
+      loading={loading}
+      disabled={loading}
+    >
+      Entrar
+    </Button>
+
+    <Text style={styles.link} onPress={() => router.push('../../RegistroUser')}>
+      Criar uma conta
+    </Text>
+  </View>
+
+  <Snackbar
+    visible={visibleSnackbar}
+    onDismiss={() => setVisibleSnackbar(false)}
+    duration={Snackbar.DURATION_SHORT}
+  >
+    Login bem-sucedido!
+  </Snackbar>
+</View>
+
   );
 }
 
@@ -140,6 +144,20 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#32312F',
   },
+  transparentBox: {
+  width: '100%',
+  backgroundColor: 'rgba(10, 10, 10, 0.4)', // fundo branco transparente
+  padding: 20,
+  borderRadius: 15,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.3,
+  shadowRadius: 0.1,
+  borderColor: '#fff',
+  borderWidth: 3,
+  marginBottom: 20,
+  paddingBottom: 30,
+},
   header: {
     flexDirection: 'row',
     alignItems: 'center',

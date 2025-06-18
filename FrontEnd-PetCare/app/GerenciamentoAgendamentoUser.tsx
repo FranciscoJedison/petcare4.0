@@ -814,10 +814,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 5,
   },
   zebraRowEven: {
-    backgroundColor: '#0bb0a6', // Marrom bem clarinho
+    backgroundColor: '#0bb0a6',
   },
   zebraRowOdd: {
-    backgroundColor: '#00635D', // Outra variação de tom claro
+    backgroundColor: '#00635D',
   },
   dataTable: {
     minWidth: 600,
@@ -1000,9 +1000,9 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     marginVertical: 10, // Espaçamento vertical para o campo de pesquisa
-    borderWidth: 1, // Largura da borda
-    borderColor: '#ccc', // Cor da borda padrão
-    borderRadius: 50, // Bordas arredondadas
+    //borderWidth: 1, // Largura da borda
+    //borderColor: '#ccc', // Cor da borda padrão
+    //borderRadius: 50, // Bordas arredondadas
     padding: 10, // Espaçamento interno
     backgroundColor: '#fff', // Cor de fundo
     elevation: 2, // Sombra para dar um efeito de elevação

@@ -25,6 +25,7 @@ import GerenciamentoAgendamentoUser from '../GerenciamentoAgendamentoUser';
 import Relatorio from '../Relatorio';
 import AlterarSenhaScreen from './AlterarSenha';
 import RedefinirSenhaScreen from './RedefinirSenha';
+import { SafeAreaView } from 'react-native-safe-area-context';
 type ColorScheme = 'light' | 'dark';
 
 const DrawerNavigator = createDrawerNavigator();
@@ -39,7 +40,7 @@ type IconName =
   | 'file-tray'
   | 'call';
 
-function Tabs() {
+function Tabs({navigation}: any) {
   const colorScheme = useColorScheme();
 
   return (
@@ -83,9 +84,14 @@ function Tabs() {
           fontWeight: 'bold',
           headerTitleAlign: 'center',
         },
+        headerLeft: () => (
+          <Pressable onPress={() => navigation.openDrawer()} style={{ marginLeft: 15 }}>
+            <Ionicons name="menu" size={28} color={Colors[colorScheme ?? 'dark'].tint} />
+          </Pressable>
+        ),
         headerBackground: () => (
           <LinearGradient
-            colors={['#4A90E2', '#2C3E50']}
+            colors={['#121212', '#121212']}
             style={styles.headerGradient}
             start={[0, 0]}
             end={[1, 0]}
@@ -117,6 +123,7 @@ function Tabs() {
           },
       })}
     >
+      
       <TabNavigator.Screen name="Home" component={HomeScreen} options={{ title: 'Página Inicial' }} />
       <TabNavigator.Screen name="Sobre nos" component={AboutScreen} options={{ title: 'Sobre Nós' }} />
       <TabNavigator.Screen name="Nossos serviços" component={ServiceScreen} options={{ title: 'Nossos Serviços' }} />
@@ -173,18 +180,21 @@ export default function DrawerLayout() {
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
-    },
+    },  
       drawerActiveTintColor: '#4A90E2',
       drawerInactiveTintColor: '#fff',
       headerTintColor: '#fff',
     headerBackground: () => (
       <LinearGradient
-        colors={['#4A90E2', '#2C3E50']}
+        colors={['#121212', '#121212']}
         style={styles.headerGradient}
         start={[0, 0]}
         end={[1, 0]}
       />
     ),
+    sceneContainerStyle: {
+      backgroundColor: '#121212',
+    },
       headerLeft: () => (
         <Pressable
         onPress={() => {
@@ -212,16 +222,7 @@ export default function DrawerLayout() {
       name="Home"
       component={Tabs}
       options={{
-        title: 'Menu',
-        headerTintColor: '#fff',
-        headerBackground: () => (
-          <LinearGradient
-            colors={['#4A90E2', '#2C3E50']}
-            style={styles.headerGradient}
-            start={[0, 0]}
-            end={[1, 0]}
-          />
-        ),
+        headerShown: false, // <- Isso remove o header duplicado com "Menu"
         drawerIcon: ({ color }) => <Ionicons name="home-outline" size={28} color={color} />,
       }}
     />
@@ -289,14 +290,14 @@ export default function DrawerLayout() {
           }}
           component={AlterarSenhaScreen}
         />
-        <DrawerNavigator.Screen
+        {/*<DrawerNavigator.Screen
           name="RedefinirSenha"
           options={{
             title: 'Redefinir Senha',
             drawerIcon: ({ color }) => <Ionicons name="lock-open-outline" size={28} color={color} />,
           }}
           component={RedefinirSenhaScreen}
-        />
+        />*/}
         <DrawerNavigator.Screen
           name="Sair"
           options={{
@@ -340,14 +341,14 @@ export default function DrawerLayout() {
           }}
           component={AlterarSenhaScreen}
         />
-        <DrawerNavigator.Screen
+        {/*<DrawerNavigator.Screen
           name="RedefinirSenha"
           options={{
             title: 'Redefinir Senha',
             drawerIcon: ({ color }) => <Ionicons name="lock-open-outline" size={28} color={color} />,
           }}
           component={RedefinirSenhaScreen}
-        />
+        />*/}
         <DrawerNavigator.Screen
           name="Sair"
           options={{

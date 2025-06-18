@@ -55,6 +55,7 @@ export default function RegisterScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.transparentBox}>
       <View style={styles.header}>
         <View style={styles.imageWrapper}>
           <Image source={require('../../assets/images/petcare.png')} style={styles.image} />
@@ -108,6 +109,7 @@ export default function RegisterScreen() {
       <Text style={styles.link} onPress={() => navigation.navigate('Login')}>
         Já tem uma conta? Faça login
       </Text>
+      </View>
     </View>
   );
 }
@@ -120,6 +122,20 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#32312F',
   },
+  transparentBox: {
+  width: '100%',
+  backgroundColor: 'rgba(10, 10, 10, 0.4)', // fundo branco transparente
+  padding: 20,
+  borderRadius: 15,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.3,
+  shadowRadius: 0.1,
+  borderColor: '#fff',
+  borderWidth: 3,
+  marginBottom: 20,
+  paddingBottom: 30,
+},
   header: {
     flexDirection: 'row',
     alignItems: 'center',

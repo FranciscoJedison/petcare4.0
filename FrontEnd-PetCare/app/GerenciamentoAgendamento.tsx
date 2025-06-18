@@ -932,9 +932,9 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     marginVertical: 10, // Espaçamento vertical para o campo de pesquisa
-    borderWidth: 1, // Largura da borda
-    borderColor: '#ccc', // Cor da borda padrão
-    borderRadius: 50, // Bordas arredondadas
+    //borderWidth: 1, // Largura da borda
+    //borderColor: '#ccc', // Cor da borda padrão
+    //borderRadius: 50, // Bordas arredondadas
     padding: 10, // Espaçamento interno
     backgroundColor: '#fff', // Cor de fundo
     elevation: 2, // Sombra para dar um efeito de elevação
