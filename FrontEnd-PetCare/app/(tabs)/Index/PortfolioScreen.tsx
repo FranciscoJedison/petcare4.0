@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#32312F',
     paddingBottom: 70,
+    paddingTop: 5,
   },
   heading: {
     alignItems: 'center',

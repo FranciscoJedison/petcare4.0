@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     minHeight: '100%', // Garantir que a tela ocupe toda a altura
     paddingBottom: 80,
-    paddingTop: 100,
+    paddingTop: 5,
   },
   imageContainer: {
     alignItems: 'center',

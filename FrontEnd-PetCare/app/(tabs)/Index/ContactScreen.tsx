@@ -1,9 +1,10 @@
 import React from "react";
 import { View, Text, TextInput, TouchableOpacity, Linking, ScrollView } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 const ContactScreen = () => {
     return (
-        <ScrollView style={{ padding: 20, backgroundColor: "#32312F" }}>
+        <ScrollView style={{ padding: 20, backgroundColor: "#32312F", paddingTop: 5, }}>
             <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 20 }}>
             <Text style={{ color: "#EBFFF8" }}>Pet Care</Text>
             </Text>

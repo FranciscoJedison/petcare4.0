@@ -807,6 +807,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    paddingTop: 100,
   },
   tableHeader: {
     backgroundColor: '#00635D', // cor de fundo verde

@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
   serviceContainer: {
     padding: 20,
     paddingBottom: 100,
+    paddingTop: 5,
   },
   fixedButtonContainer: {
     position: 'absolute',

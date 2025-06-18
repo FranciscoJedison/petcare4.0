@@ -363,10 +363,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     //backgroundColor: '#D2B48C',
+    paddingTop: 100,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     resizeMode: 'cover',
     marginBottom: 20,
     borderRadius: 50,

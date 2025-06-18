@@ -80,6 +80,8 @@ const BlogScreen: React.FC = () => {
   );
 
   return (
+    <LinearGradient
+          colors={['#0f0f0f', '#424242']}>
     <View style={styles.container}>
       <FlatList
         data={blogPosts}
@@ -90,6 +92,7 @@ const BlogScreen: React.FC = () => {
         style={styles.flatList}
       />
     </View>
+    </LinearGradient>
   );
 };
 
@@ -101,6 +104,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 20,
     paddingBottom: 80,
+    paddingTop: 5,
   },
   heading: {
     fontSize: 28,
